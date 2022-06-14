@@ -60,6 +60,16 @@ class ServerConnection {
   }
 }
 
+const createServerConnection = (user) => {
+  const userSentMessageFile = `${CHAT_DIR}/${user.username}/userSentMessages`;
+
+  const writeStream = fs.createWriteStream(userSentMessageFile, 'utf8');
+  const serverConnection = new ServerConnection(user, writeStream);
+  serverConnection.connect();
+
+  return serverConnection;
+};
+
 const formateMessage = (message, sender) => {
   return `\n${sender.name} says :\n${message}`;
 };
@@ -69,12 +79,7 @@ const main = (username, name) => {
     username, name
   };
 
-  const userSentMessageFile = `${CHAT_DIR}/${user.username}/userSentMessages`;
-
-  const writeStream = fs.createWriteStream(userSentMessageFile, 'utf8');
-
-  const serverConnection = new ServerConnection(user, writeStream);
-  serverConnection.connect();
+  const serverConnection = createServerConnection(user);
 
   serverConnection.on('new-message', (sender, message) => {
     console.log(formateMessage(message, sender));
