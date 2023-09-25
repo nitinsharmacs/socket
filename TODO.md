@@ -1,7 +1,8 @@
 ## TODO
 
-- [ ] Improve listen method in ServerConnection
-- [ ] Create separate section for typing the message for the client
+- [ ] watch client inbox file from server-client
+
+
   
 ## DONE
 
